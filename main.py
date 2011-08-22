@@ -46,9 +46,17 @@ def main():
         screen = pygame.display.set_mode(
                     (cfg.SCREEN_WIDTH, cfg.SCREEN_HEIGHT))
         pygame.mouse.set_visible(0)
+
+        # render initial load screen
+        background = pygame.Surface(screen.get_size())
+        background = background.convert()
+        background.fill((250, 250, 250))
+        screen.blit(background, (0,0))
         pygame.display.flip()
 
+        # load sprites, etc
         # TODO
+        allsprites = pygame.sprite.RenderPlain([])
 
         #
         # Main event loop
@@ -59,7 +67,7 @@ def main():
             for event in pygame.event.get():
                 if event.type == QUIT or \
                    event.type == KEYDOWN and event.key == K_ESCAPE:
-                    going = False
+                    running = False
 
                 #
                 # Handle inputs
@@ -70,8 +78,10 @@ def main():
             #
             # Render
             #
+            allsprites.update()
+            allsprites.draw(screen)
+            pygame.display.flip()
 
-            # TODO
     except:
         log.exception("Main loop caught fatal exception")
     finally:
