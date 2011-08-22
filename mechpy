@@ -1,0 +1,7 @@
+#!/bin/bash
+
+main_dir=`dirname $0`
+echo $main_dir
+
+python "$main_dir/src/main.py"
+
