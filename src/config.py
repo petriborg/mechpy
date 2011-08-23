@@ -94,7 +94,8 @@ class Config:
         #
         # Load configuration
         #
-        main_dir = os.path.split(os.path.abspath(__file__))[0]
+        src_dir = os.path.split(os.path.abspath(__file__))[0]
+        main_dir = os.path.abspath(os.path.join(src_dir, '..'))
         data_dir = os.path.join(main_dir, 'data')
         user_dir = os.getenv("HOME")
 
