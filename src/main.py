@@ -64,23 +64,11 @@ def main():
         running = True
         while running:
             clock.tick(30)
-            for event in pygame.event.get():
-                if event.type == QUIT or \
-                   event.type == KEYDOWN and event.key == K_ESCAPE:
-                    running = False
-
-                #
-                # Handle inputs
-                #
-
-                # TODO
-
-            #
-            # Render
-            #
-            allsprites.update()
-            allsprites.draw(screen)
-            pygame.display.flip()
+            
+            if not ControllerTick():
+				return False
+				
+			ViewTick()
 
     except:
         log.exception("Main loop caught fatal exception")
@@ -92,3 +80,22 @@ def main():
 if __name__ == '__main__':
     main()
 
+def ControllerTick():
+	for event in pygame.event.get():
+		if event.type == QUIT or \
+		   event.type == KEYDOWN and event.key == K_ESCAPE:
+			running = False
+
+		#
+		# Handle inputs
+		#
+
+		# TODO
+	
+def ViewTick():
+	#
+	# Render
+	#
+	allsprites.update()
+	allsprites.draw(screen)
+	pygame.display.flip()
