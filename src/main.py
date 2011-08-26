@@ -66,9 +66,9 @@ def main():
             clock.tick(30)
             
             if not ControllerTick():
-				return False
-				
-			ViewTick()
+                running = False
+
+            ViewTick()
 
     except:
         log.exception("Main loop caught fatal exception")
@@ -77,25 +77,27 @@ def main():
         pygame.quit()
 
 
+def ControllerTick():
+    for event in pygame.event.get():
+        if event.type == QUIT or \
+           event.type == KEYDOWN and event.key == K_ESCAPE:
+            running = False
+
+        #
+        # Handle inputs
+        #
+
+        # TODO
+
+def ViewTick():
+    #
+    # Render
+    #
+    allsprites.update()
+    allsprites.draw(screen)
+    pygame.display.flip()
+
+
+# this should always be the last thing in the file
 if __name__ == '__main__':
     main()
-
-def ControllerTick():
-	for event in pygame.event.get():
-		if event.type == QUIT or \
-		   event.type == KEYDOWN and event.key == K_ESCAPE:
-			running = False
-
-		#
-		# Handle inputs
-		#
-
-		# TODO
-	
-def ViewTick():
-	#
-	# Render
-	#
-	allsprites.update()
-	allsprites.draw(screen)
-	pygame.display.flip()
