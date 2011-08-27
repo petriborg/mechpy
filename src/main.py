@@ -31,71 +31,57 @@ except:
 import config
 
 #
+# Load sprites
+import mechsprite
+
+#
+# Load controllers
+import cpucontroller
+import keyboardcontroller
+import graphicscontroller
+
+#
+# Load eventmanager
+import eventmanager
+
+#
 # Main
 #
 def main():
     config.init() # load configuration
     pygame.init()
+    eventmanager.init()
+    graphicscontroller.init()
     try:
-        clock = pygame.time.Clock()
 
         #
         # Build world
         #
         cfg = config.config
-        screen = pygame.display.set_mode(
-                    (cfg.SCREEN_WIDTH, cfg.SCREEN_HEIGHT))
-        pygame.mouse.set_visible(0)
-
-        # render initial load screen
-        background = pygame.Surface(screen.get_size())
-        background = background.convert()
-        background.fill((250, 250, 250))
-        screen.blit(background, (0,0))
-        pygame.display.flip()
+        pygame.mouse.set_visible(1)
 
         # load sprites, etc
-        # TODO
-        allsprites = pygame.sprite.RenderPlain([])
-
-        #
-        # Main event loop
-        #
-        running = True
-        while running:
-            clock.tick(30)
-            
-            if not ControllerTick():
-                running = False
-
-            ViewTick()
+        mech = mechsprite.Mech()
+        
+        em = eventmanager.evManager
+        
+        cpu = cpucontroller.CPUController()
+        kyb = keyboardcontroller.KeyboardController()
+        graphics = graphicscontroller.graphics
+        
+        graphics.AddSprite(mech)
+        
+        em.RegisterListener(cpu)
+        em.RegisterListener(kyb)
+        em.RegisterListener(graphics)
+        
+        cpu.Run()
 
     except:
         log.exception("Main loop caught fatal exception")
     finally:
         log.info("Finalizing...")
         pygame.quit()
-
-
-def ControllerTick():
-    for event in pygame.event.get():
-        if event.type == QUIT or \
-           event.type == KEYDOWN and event.key == K_ESCAPE:
-            running = False
-
-        #
-        # Handle inputs
-        #
-
-        # TODO
-
-def ViewTick():
-    #
-    # Render
-    #
-    allsprites.update()
-    allsprites.draw(screen)
-    pygame.display.flip()
 
 
 # this should always be the last thing in the file
