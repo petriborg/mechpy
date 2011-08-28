@@ -10,7 +10,7 @@ from pygame.locals import *
 class KeyboardController:
     
     def __init__(self):
-        self.name = "CPU Controller"
+        self.name = "Keyboard Controller"
         self.evManager = eventmanager.evManager
     
     def Notify(self, event):

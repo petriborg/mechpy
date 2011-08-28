@@ -38,7 +38,9 @@ import mechsprite
 # Load controllers
 import cpucontroller
 import keyboardcontroller
-import graphicscontroller
+import cursorcontroller
+import battlecontroller
+#import guicontroller
 
 #
 # Load eventmanager
@@ -51,7 +53,8 @@ def main():
     config.init() # load configuration
     pygame.init()
     eventmanager.init()
-    graphicscontroller.init()
+    battlecontroller.init()
+    #guicontroller.init()
     try:
 
         #
@@ -59,21 +62,25 @@ def main():
         #
         cfg = config.config
         pygame.mouse.set_visible(1)
-
-        # load sprites, etc
-        mech = mechsprite.Mech()
         
         em = eventmanager.evManager
         
         cpu = cpucontroller.CPUController()
         kyb = keyboardcontroller.KeyboardController()
-        graphics = graphicscontroller.graphics
+        cur = cursorcontroller.CursorController()
+        bat = battlecontroller.battle
+        #gui = guicontroller.gui
         
-        graphics.AddSprite(mech)
+        #testing
+        mech = mechsprite.Mech()
+        bat.AddSprite(mech)
+        bat.Start()
         
         em.RegisterListener(cpu)
         em.RegisterListener(kyb)
-        em.RegisterListener(graphics)
+        em.RegisterListener(cur)
+        em.RegisterListener(bat)
+        #em.RegisterListener(gui)
         
         cpu.Run()
 

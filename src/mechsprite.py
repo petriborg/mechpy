@@ -21,7 +21,7 @@ class Mech(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self) #call Sprite initializer
         cfg = config.config
-        self.image, self.rect = util.load_image('simplemech.jpg', -1)
+        self.image, self.rect = util.load_image('small/wheelchassis.png', -1)
         #self.rect.center. = cfg.SCREEN_WIDTH/2
         #self.rect.mid = pos
         self.armor = None
